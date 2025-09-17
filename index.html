@@ -1,117 +1,38 @@
 <!DOCTYPE html>
-<html lang="ru" class="scroll-smooth">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Анализ Агропромышленного Комплекса России</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Galaxy Consulting Agro</title>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FDFBF8;
-            color: #44403c;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px;
-            max-height: 50vh;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 450px;
-            }
-        }
-        .stat-card {
-            background-color: #fff;
-            border: 1px solid #f0eade;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
-        }
-        /* Стили для фонового фото hero */
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-        }
-        .hero-bg img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            filter: brightness(0.80);
-        }
-        .hero-bg-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.6) 50%, #FEF3C7CC 100%);
-            z-index: 1;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
+        body { font-family: sans-serif; }
+        .counter { font-size: 2em; margin: 20px; }
     </style>
 </head>
-<body class="antialiased">
-
-    <!-- ... остальная разметка страницы ... -->
-
+<body>
+    <h1>Агро комплекс России</h1>
+    <div class="counter" id="counter1"></div>
+    <div class="counter" id="counter2"></div>
+    <div class="counter" id="counter3"></div>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            function animateCounter(element, start, end, duration, suffix = '') {
-                let startTime = null;
-                function step(timestamp) {
-                    if (!startTime) startTime = timestamp;
-                    const progress = Math.min((timestamp - startTime) / duration, 1);
-                    const value = Math.floor(progress * (end - start) + start);
-                    element.textContent = value + suffix;
-                    if (progress < 1) {
-                        window.requestAnimationFrame(step);
-                    } else {
-                        element.textContent = end + suffix;
-                    }
+        function animateCounter(element, start, end, duration, suffix = '') {
+            let startTime = null;
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const progress = Math.min((timestamp - startTime) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value + suffix;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    element.textContent = end + suffix;
                 }
-                window.requestAnimationFrame(step);
             }
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        if (entry.target.id === 'degraded-land-counter') {
-                            animateCounter(entry.target, 0, 60, 2000, '%');
-                        }
-                        if (entry.target.id === 'humus-loss-counter') {
-                            animateCounter(entry.target, 0, 40, 2000, '%');
-                        }
-                        if (entry.target.id === 'annual-loss-counter') {
-                            animateCounter(entry.target, 0, 2, 1500);
-                        }
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 });
-            
-            const degradedLand = document.getElementById('degraded-land-counter');
-            const humusLoss = document.getElementById('humus-loss-counter');
-            const annualLoss = document.getElementById('annual-loss-counter');
-            
-            if (degradedLand) observer.observe(degradedLand);
-            if (humusLoss) observer.observe(humusLoss);
-            if (annualLoss) observer.observe(annualLoss);
-
-            // ... остальной скрипт ...
-        });
+            window.requestAnimationFrame(step);
+        }
+        animateCounter(document.getElementById('counter1'), 0, 60, 2000, '%'); // деградированные земли
+        animateCounter(document.getElementById('counter2'), 0, 40, 2000, '%'); // потеря гумуса
+        animateCounter(document.getElementById('counter3'), 0, 2, 1500);       // ежегодная потеря
     </script>
 </body>
 </html>
