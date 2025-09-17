@@ -1,256 +1,37 @@
 <!DOCTYPE html>
-<html lang="ru" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Анализ Агропромышленного Комплекса России</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Galaxy Consulting Agro</title>
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FDFBF8;
-            color: #44403c;
+            background-image: url('your-background-image-url.jpg');
+            background-size: cover;
+            color: white;
+            font-family: Arial, sans-serif;
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px;
-            max-height: 50vh;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 450px;
-            }
-        }
-        .stat-card {
-            background-color: #fff;
-            border: 1px solid #f0eade;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
-        }
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-        }
-        .hero-bg img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            filter: brightness(0.80);
-        }
-        .hero-bg-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.6) 50%, #FEF3C7CC 100%);
-            z-index: 1;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
+        .counter {
+            font-size: 2em;
+            margin: 20px;
         }
     </style>
 </head>
-<body class="antialiased">
-
-    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-stone-200">
-        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-            <div class="flex-shrink-0">
-                <h1 class="text-xl font-bold text-green-800">Агро комплекс России</h1>
-            </div>
-            <div class="hidden md:block">
-                <div class="ml-10 flex items-baseline space-x-4">
-                    <a href="#problem" class="text-stone-600 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium">Проблемы</a>
-                    <a href="#comparison" class="text-stone-600 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium">Сравнение</a>
-                    <a href="#solution" class="text-stone-600 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium">Решения</a>
-                    <a href="#strategy" class="text-stone-600 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium">Стратегия</a>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <section id="hero" class="py-20 md:py-32 bg-amber-50 relative overflow-hidden">
-            <div class="hero-bg">
-                <img src="https://images.unsplash.com/photo-1506744403841-46273834b3fb?auto=format&fit=crop&w=1500&q=80" alt="Wheat field in Russia" />
-            </div>
-            <div class="hero-bg-overlay"></div>
-            <div class="hero-content container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-4xl md:text-6xl font-bold tracking-tight text-stone-800">Анализ состояния агропромышленного комплекса России</h2>
-                <h3 class="text-4xl md:text-6xl font-bold tracking-tight text-green-800 mt-2">Проблемы и решения</h3>
-                <p class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-stone-600">
-                    Агропромышленный комплекс России испытывает значительные экологические и экономические вызовы. Важно понимать масштабы проблем и пути их решения для устойчивого развития отрасли.
-                </p>
-            </div>
-        </section>
-
-        <section id="problem" class="py-16 md:py-24">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <div class="stat-card p-6 rounded-lg shadow-sm">
-                        <div id="degraded-land-counter" class="text-5xl font-bold text-amber-600">0%</div>
-                        <p class="mt-2 text-md font-medium text-stone-700">Деградированные земли</p>
-                    </div>
-                    <div class="stat-card p-6 rounded-lg shadow-sm">
-                        <div id="humus-loss-counter" class="text-5xl font-bold text-amber-600">0%</div>
-                        <p class="mt-2 text-md font-medium text-stone-700">Потеря гумуса в почвах</p>
-                    </div>
-                    <div class="stat-card p-6 rounded-lg shadow-sm">
-                        <div id="annual-loss-counter" class="text-5xl font-bold text-amber-600">0</div>
-                        <p class="mt-2 text-md font-medium text-stone-700">Ежегодная потеря почв (млн га)</p>
-                    </div>
-                </div>
-                <div class="mt-12 text-center">
-                    <h4 class="font-semibold text-red-800 text-2xl">Ключевые проблемы:</h4>
-                    <ul class="mt-2 list-disc list-inside text-red-700 space-y-1">
-                        <li><b>Деградация земель:</b> 60% сельхозугодий подвержены деградации (засоление, эрозия, истощение).</li>
-                        <li><b>Потеря гумуса:</b> потери до 40% органического вещества в почвах за последние десятилетия.</li>
-                        <li><b>Ежегодная потеря:</b> до 2 млн га плодородных земель каждый год.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section id="comparison" class="py-16 md:py-24 bg-stone-50">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold tracking-tight text-stone-800 text-center mb-8">Сравнение с другими странами</h2>
-                <div class="chart-container mx-auto mb-8">
-                    <canvas id="fertilizerChart"></canvas>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <div>
-                        <h3 class="text-2xl font-bold text-green-700">Россия</h3>
-                        <p class="text-lg text-stone-600">Удобрения: 65 кг/га</p>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-green-700">Германия</h3>
-                        <p class="text-lg text-stone-600">Удобрения: 191 кг/га</p>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-green-700">Франция</h3>
-                        <p class="text-lg text-stone-600">Удобрения: 328 кг/га</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="solution" class="py-16 md:py-24">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold tracking-tight text-stone-800 text-center mb-8">Решения и инновации</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <div class="stat-card p-6 rounded-lg shadow-sm">
-                        <h4 class="font-semibold text-green-800 text-xl mb-2">Точечное земледелие</h4>
-                        <p class="text-stone-700">Внедрение GPS и сенсоров для оптимизации процессов обработки почвы и внесения удобрений.</p>
-                    </div>
-                    <div class="stat-card p-6 rounded-lg shadow-sm">
-                        <h4 class="font-semibold text-green-800 text-xl mb-2">Биологизация</h4>
-                        <p class="text-stone-700">Использование биологических удобрений и технологий для восстановления структуры и состава почвы.</p>
-                    </div>
-                    <div class="stat-card p-6 rounded-lg shadow-sm">
-                        <h4 class="font-semibold text-green-800 text-xl mb-2">Цифровые платформы</h4>
-                        <p class="text-stone-700">Аналитика, мониторинг и прогнозирование состояния почв с помощью цифровых инструментов.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="strategy" class="py-16 md:py-24 bg-green-50">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold tracking-tight text-green-800 text-center mb-8">Стратегия устойчивого развития</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
-                    <div class="stat-card p-6 rounded-lg shadow-sm">
-                        <h4 class="font-semibold text-green-800 text-xl mb-2">Сохранение почв</h4>
-                        <p class="text-stone-700">Меры по предотвращению эрозии, возобновление плодородия, эффективное управление ресурсами.</p>
-                    </div>
-                    <div class="stat-card p-6 rounded-lg shadow-sm">
-                        <h4 class="font-semibold text-green-800 text-xl mb-2">Экономическая эффективность</h4>
-                        <p class="text-stone-700">Сбалансированное применение удобрений, поддержка инноваций, повышение доходности отрасли.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-stone-800 text-white">
-        <div class="container mx-auto py-6 px-4 sm:px-8 text-center text-sm">
-            &copy; 2025 Galaxy Consulting. Все права защищены.
-        </div>
-    </footer>
-
+<body>
+    <h1>Welcome to Galaxy Consulting Agro</h1>
+    <div class="counter">
+        <span id="counter1">0%</span>
+    </div>
     <script>
-        // Анимация счетчиков с % и без %
-        document.addEventListener('DOMContentLoaded', () => {
-            function animateCounter(element, start, end, duration, suffix = '') {
-                let startTime = null;
-                function step(timestamp) {
-                    if (!startTime) startTime = timestamp;
-                    const progress = Math.min((timestamp - startTime) / duration, 1);
-                    const value = Math.floor(progress * (end - start) + start);
-                    element.textContent = value + suffix;
-                    if (progress < 1) {
-                        window.requestAnimationFrame(step);
-                    } else {
-                        element.textContent = end + suffix;
-                    }
-                }
-                window.requestAnimationFrame(step);
+        let counter1 = 0;
+        const interval1 = setInterval(() => {
+            if (counter1 < 100) {
+                counter1++;
+                document.getElementById('counter1').innerText = counter1 + '%';
+            } else {
+                clearInterval(interval1);
             }
-
-            // Счетчики
-            animateCounter(document.getElementById('degraded-land-counter'), 0, 60, 2000, '%');
-            animateCounter(document.getElementById('humus-loss-counter'), 0, 40, 2000, '%');
-            animateCounter(document.getElementById('annual-loss-counter'), 0, 2, 1500);
-
-            // График Chart.js
-            const ctx = document.getElementById('fertilizerChart');
-            if (ctx) {
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Россия', 'Германия', 'Франция'],
-                        datasets: [{
-                            label: 'Удобрения (кг/га)',
-                            data: [65, 191, 328],
-                            backgroundColor: [
-                                'rgba(234, 179, 8, 0.6)',
-                                'rgba(34, 197, 94, 0.6)',
-                                'rgba(59, 130, 246, 0.6)'
-                            ],
-                            borderColor: [
-                                'rgba(234, 179, 8, 1)',
-                                'rgba(34, 197, 94, 1)',
-                                'rgba(59, 130, 246, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: { enabled: true }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                title: { display: true, text: 'кг/га' }
-                            }
-                        }
-                    }
-                });
-            }
-        });
+        }, 100);
     </script>
 </body>
 </html>
