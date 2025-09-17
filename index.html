@@ -3,35 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Galaxy Consulting Agro</title>
     <style>
         body {
-            background-image: url('your-background-image-url.jpg');
+            background-image: url('background.jpg');
             background-size: cover;
             color: white;
             font-family: Arial, sans-serif;
         }
         .counter {
             font-size: 2em;
+            text-align: center;
             margin: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to Galaxy Consulting Agro</h1>
-    <div class="counter">
-        <span id="counter1">0%</span>
-    </div>
-    <script>
-        let counter1 = 0;
-        const interval1 = setInterval(() => {
-            if (counter1 < 100) {
-                counter1++;
-                document.getElementById('counter1').innerText = counter1 + '%';
-            } else {
-                clearInterval(interval1);
-            }
-        }, 100);
-    </script>
+    <header>
+        <h1>Welcome to Galaxy Consulting Agro</h1>
+    </header>
+    <main>
+        <section class="counters">
+            <div class="counter">Quality: <span id="quality">100%</span></div>
+            <div class="counter">Efficiency: <span id="efficiency">95%</span></div>
+            <div class="counter">Satisfaction: <span id="satisfaction">98%</span></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Galaxy Consulting Agro</p>
+    </footer>
 </body>
 </html>
