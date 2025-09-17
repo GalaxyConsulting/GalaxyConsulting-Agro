@@ -1,37 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Galaxy Consulting Agro</title>
+    <title>Анализ Агропромышленного Комплекса России</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-image: url('background.jpg');
-            background-size: cover;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-        .counter {
-            font-size: 2em;
-            text-align: center;
-            margin: 20px;
-        }
+        body {font-family: 'Inter', sans-serif; background-color: #FDFBF8; color: #44403c;}
+        .hero-bg {position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; overflow: hidden;}
+        .hero-bg img {width: 100%; height: 100%; object-fit: cover; object-position: center; filter: brightness(0.80);}
+        .hero-bg-overlay {position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.6) 50%, #FEF3C7CC 100%); z-index: 1;}
+        .hero-content {position: relative; z-index: 2;}
+        .stat-card {background-color: #fff; border: 1px solid #f0eade; transition: transform 0.3s ease, box-shadow 0.3s ease;}
+        .stat-card:hover {transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);}
+        .chart-container {position: relative; width: 100%; max-width: 700px; margin: auto; height: 350px; max-height: 50vh;}
+        @media (min-width: 768px) {.chart-container {height: 450px;}}
     </style>
 </head>
-<body>
-    <header>
-        <h1>Welcome to Galaxy Consulting Agro</h1>
+<body class="antialiased">
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-stone-200">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+            <div class="flex-shrink-0">
+                <h1 class="text-xl font-bold text-green-800">АПК России</h1>
+            </div>
+            <div class="hidden md:block">
+                <div class="ml-10 flex items-baseline space-x-4">
+                    <a href="#problem" class="text-stone-600 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium">Проблема</a>
+                    <a href="#comparison" class="text-stone-600 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium">Сравнение</a>
+                    <a href="#solution" class="text-stone-600 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium">Решение</a>
+                    <a href="#strategy" class="text-stone-600 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium">Стратегия</a>
+                </div>
+            </div>
+        </nav>
     </header>
     <main>
-        <section class="counters">
-            <div class="counter">Quality: <span id="quality">100%</span></div>
-            <div class="counter">Efficiency: <span id="efficiency">95%</span></div>
-            <div class="counter">Satisfaction: <span id="satisfaction">98%</span></div>
+        <section id="hero" class="py-20 md:py-32 bg-amber-50 relative overflow-hidden">
+            <div class="hero-bg">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80" alt="Wheat field in Russia" />
+                <div class="hero-bg-overlay"></div>
+            </div>
+            <div class="hero-content container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl md:text-6xl font-bold tracking-tight text-stone-800">Агросектор России:</h2>
+                <h3 class="text-4xl md:text-6xl font-bold tracking-tight text-green-800 mt-2">Вызовы и Органические Решения</h3>
+                <p class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-stone-600">
+                    Комплексный анализ состояния земледелия в России, ключевых угроз устойчивости и потенциала органических удобрений как стратегического пути развития.
+                </p>
+            </div>
+        </section>
+        <section id="problem" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-stone-800 sm:text-4xl">Ключевая проблема: истощение земель</h2>
+                    <p class="mt-4 text-lg text-stone-600 max-w-3xl mx-auto">
+                        Несмотря на успехи в производстве, российский АПК сталкивается с фундаментальной угрозой — деградацией почв. Это подрывает основы долгосрочной продовольственной безопасности и рентабельности сельского хозяйства.
+                    </p>
+                </div>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="stat-card p-6 rounded-lg shadow-sm text-center">
+                        <div id="degraded-land-counter" class="text-5xl font-bold text-amber-600">0%</div>
+                        <p class="mt-2 text-md font-medium text-stone-700">сельхозугодий деградировано</p>
+                        <p class="mt-1 text-sm text-stone-500">Основная причина — истощение запасов гумуса.</p>
+                    </div>
+                    <div class="stat-card p-6 rounded-lg shadow-sm text-center">
+                        <div id="humus-loss-counter" class="text-5xl font-bold text-amber-600">0%</div>
+                        <p class="mt-2 text-md font-medium text-stone-700">потеря гумуса за 100 лет</p>
+                        <p class="mt-1 text-sm text-stone-500">Это напрямую снижает естественное плодородие.</p>
+                    </div>
+                    <div class="stat-card p-6 rounded-lg shadow-sm text-center">
+                        <div id="annual-loss-counter" class="text-5xl font-bold text-amber-600">0</div>
+                        <p class="mt-2 text-md font-medium text-stone-700">млн га теряется ежегодно</p>
+                        <p class="mt-1 text-sm text-stone-500">Процесс деградации продолжается и ускоряется.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="comparison" class="py-16 md:py-24 bg-stone-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-stone-800 sm:text-4xl">Два пути: Сравнение подходов к удобрениям</h2>
+                    <p class="mt-4 text-lg text-stone-600 max-w-3xl mx-auto">
+                        Выбор между минеральными и органическими удобрениями определяет не только урожайность текущего года, но и здоровье почвы на десятилетия вперед.
+                    </p>
+                </div>
+                <div class="mt-12">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-stone-800">Внесение минеральных удобрений</h3>
+                        <p class="text-stone-600">Россия значительно отстает от научно-обоснованных норм и показателей стран-лидеров.</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="fertilizerChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2023 Galaxy Consulting Agro</p>
+    <footer class="bg-stone-800 text-white">
+        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2025 Galaxy Consulting. Информация основана на данных из открытых источников.</p>
+        </div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            function animateCounter(element, start, end, duration, suffix = '') {
+                let startTime = null;
+                const step = (timestamp) => {
+                    if (!startTime) startTime = timestamp;
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    element.textContent = Math.floor(progress * (end - start) + start) + suffix;
+                    if (progress < 1) {window.requestAnimationFrame(step);} else {element.textContent = end + suffix;}
+                };
+                window.requestAnimationFrame(step);
+            }
+            animateCounter(document.getElementById('degraded-land-counter'), 0, 60, 2000, '%');
+            animateCounter(document.getElementById('humus-loss-counter'), 0, 40, 2000, '%');
+            animateCounter(document.getElementById('annual-loss-counter'), 0, 2, 1500, '');
+            const ctx = document.getElementById('fertilizerChart');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Россия', 'Германия', 'Франция'],
+                        datasets: [{
+                            label: 'Удобрения (кг/га)',
+                            data: [65, 191, 328],
+                            backgroundColor: [
+                                'rgba(234, 179, 8, 0.6)',
+                                'rgba(34, 197, 94, 0.6)',
+                                'rgba(59, 130, 246, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(234, 179, 8, 1)',
+                                'rgba(34, 197, 94, 1)',
+                                'rgba(59, 130, 246, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: true }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, title: { display: true, text: 'кг/га' } }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
